@@ -1,0 +1,80 @@
+package main
+
+import (
+	"errors"
+	"fmt"
+	"os"
+	"path/filepath"
+	"reflect"
+	"strings"
+)
+
+type stubMapping map[string]interface{}
+
+var StubStorage = stubMapping{}
+
+func main() {
+	StubStorage = map[string]interface{}{
+		"Day1": Day1,
+	}
+
+	args := os.Args[1:]
+	if len(args) < 1 {
+		panic("You must supply a day name.")
+	}
+
+	if len(args[1:]) > 0 {
+		Call(args[0], args[1:])
+		return
+	}
+
+	res, err := Call(args[0], dayInput(strings.ToLower(args[0])))
+	check(err)
+	if res == nil {
+		fmt.Println("method call didn't return anything")
+	}
+
+	out("%v part 1 result: %d\n%v part 2 result: %d\n", args[0], res[0], args[0], res[1])
+}
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func dayInput(day string) []string {
+	ex, err := os.Executable()
+	check(err)
+
+	daysPath := filepath.Dir(ex) + "/inputs/"
+
+	dat, err := os.ReadFile(daysPath + day + ".txt")
+	check(err)
+
+	return strings.Split(string(dat), "\n")
+}
+
+func Call(funcName string, params ...interface{}) (result []int, err error) {
+	f := reflect.ValueOf(StubStorage[funcName])
+	if len(params) != f.Type().NumIn() {
+		err = errors.New("the number of params is out of index")
+		return
+	}
+	in := make([]reflect.Value, len(params))
+	for k, param := range params {
+		in[k] = reflect.ValueOf(param)
+	}
+
+	res := f.Call(in)
+	result1 := int(res[0].Int())
+	result2 := int(res[1].Int())
+
+	result = append(result, result1)
+	result = append(result, result2)
+	return
+}
+
+func out(toPrint string, params ...interface{}) {
+	fmt.Printf(toPrint+"\n", params...)
+}
