@@ -11,6 +11,9 @@ AdventOfCode2021
 # Test binary, built with `go test -c`
 *.test
 
+# Advent of Code Inputs
+inputs/
+
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
