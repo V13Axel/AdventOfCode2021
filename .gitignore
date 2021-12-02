@@ -5,6 +5,9 @@
 *.so
 *.dylib
 
+# Build binary
+AdventOfCode2021
+
 # Test binary, built with `go test -c`
 *.test
 
