@@ -52,10 +52,6 @@ func dayInput(day string, subdir string) []string {
 }
 
 func Call(funcName string, params ...interface{}) (result []int, err error) {
-	fmt.Println(funcName)
-	fmt.Println(params...)
-	fmt.Println(StubStorage[funcName])
-
 	f := reflect.ValueOf(StubStorage[funcName])
 	if len(params) != f.Type().NumIn() {
 		err = errors.New("the number of params is out of index")
