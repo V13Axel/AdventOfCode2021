@@ -9,14 +9,12 @@ import (
 	"testing"
 )
 
-type stubMapping map[string]interface{}
-
-var StubStorage = stubMapping{}
+var StubStorage = map[string]interface{}{
+	"Day1": Day1,
+	"Day2": Day2,
+}
 
 func main() {
-	StubStorage = map[string]interface{}{
-		"Day1": Day1,
-	}
 
 	args := os.Args[1:]
 	if len(args) < 1 {
@@ -54,11 +52,16 @@ func dayInput(day string, subdir string) []string {
 }
 
 func Call(funcName string, params ...interface{}) (result []int, err error) {
+	fmt.Println(funcName)
+	fmt.Println(params...)
+	fmt.Println(StubStorage[funcName])
+
 	f := reflect.ValueOf(StubStorage[funcName])
 	if len(params) != f.Type().NumIn() {
 		err = errors.New("the number of params is out of index")
 		return
 	}
+
 	in := make([]reflect.Value, len(params))
 	for k, param := range params {
 		in[k] = reflect.ValueOf(param)
@@ -89,13 +92,18 @@ func testFails(wants int, result int, day string, t *testing.T) {
 
 func testDay(day string, wants1 int, wants2 int, t *testing.T) {
 	input := dayInput("day"+day, "/test_inputs/")
-	result1, result2 := Day1(input)
+	res, err := Call("Day"+day, input)
+
+	check(err)
+
+	result1 := res[0]
+	result2 := res[1]
 
 	if wants1 != result1 {
-		testFails(wants1, result1, "Day 1 part 1", t)
+		testFails(wants1, result1, "Day "+day+" part 1", t)
 	}
 
 	if wants2 > 0 && wants2 != result2 {
-		testFails(wants2, result2, "Day 1 part 2", t)
+		testFails(wants2, result2, "Day "+day+" part 2", t)
 	}
 }
