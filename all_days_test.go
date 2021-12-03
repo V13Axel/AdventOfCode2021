@@ -9,5 +9,5 @@ func TestDayOneExample(t *testing.T) {
 }
 
 func TestDayTwoExample(t *testing.T) {
-	testDay("2", 150, 0, t)
+	testDay("2", 150, 900, t)
 }
