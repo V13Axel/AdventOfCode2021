@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"path/filepath"
 	"reflect"
 	"strings"
+	"testing"
 )
 
 type stubMapping map[string]interface{}
@@ -28,7 +28,7 @@ func main() {
 		return
 	}
 
-	res, err := Call(args[0], dayInput(strings.ToLower(args[0])))
+	res, err := Call(args[0], dayInput(strings.ToLower(args[0]), ""))
 	check(err)
 	if res == nil {
 		fmt.Println("method call didn't return anything")
@@ -37,17 +37,15 @@ func main() {
 	out("%v part 1 result: %d\n%v part 2 result: %d\n", args[0], res[0], args[0], res[1])
 }
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
-func dayInput(day string) []string {
-	ex, err := os.Executable()
+func dayInput(day string, subdir string) []string {
+	ex, err := os.Getwd()
 	check(err)
 
-	daysPath := filepath.Dir(ex) + "/inputs/"
+	if subdir == "" {
+		subdir = "/inputs/"
+	}
+
+	daysPath := ex + subdir
 
 	dat, err := os.ReadFile(daysPath + day + ".txt")
 	check(err)
@@ -77,4 +75,14 @@ func Call(funcName string, params ...interface{}) (result []int, err error) {
 
 func out(toPrint string, params ...interface{}) {
 	fmt.Printf(toPrint+"\n", params...)
+}
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func testFails(wants int, result int, day string, t *testing.T) {
+	t.Fatalf(`%v with example input wants %v, received %v instead.`, day, wants, result)
 }
