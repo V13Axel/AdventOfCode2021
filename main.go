@@ -86,3 +86,16 @@ func check(e error) {
 func testFails(wants int, result int, day string, t *testing.T) {
 	t.Fatalf(`%v with example input wants %v, received %v instead.`, day, wants, result)
 }
+
+func testDay(day string, wants1 int, wants2 int, t *testing.T) {
+	input := dayInput("day"+day, "/test_inputs/")
+	result1, result2 := Day1(input)
+
+	if wants1 != result1 {
+		testFails(wants1, result1, "Day 1 part 1", t)
+	}
+
+	if wants2 > 0 && wants2 != result2 {
+		testFails(wants2, result2, "Day 1 part 2", t)
+	}
+}
