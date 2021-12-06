@@ -12,7 +12,7 @@ import (
 var StubStorage = map[string]interface{}{
 	"Day1": Day1,
 	"Day2": Day2,
-	// "Day3": Day3,
+	"Day3": Day3,
 	// "Day4": Day4,
 	// "Day5": Day5,
 	// "Day6": Day6,
@@ -124,4 +124,14 @@ func testDay(day string, wants1 int, wants2 int, t *testing.T) {
 	if wants2 > 0 && wants2 != result2 {
 		testFails(wants2, result2, "Day "+day+" part 2", t)
 	}
+}
+
+func BtoI(target bool) (result int) {
+	result = 0
+
+	if target {
+		result = 1
+	}
+
+	return
 }

@@ -11,3 +11,7 @@ func TestDayOne(t *testing.T) {
 func TestDayTwo(t *testing.T) {
 	testDay("2", 150, 900, t)
 }
+
+func TestDayThree(t *testing.T) {
+	testDay("3", 198, 230, t)
+}
