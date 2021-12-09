@@ -41,36 +41,45 @@ func OxygenRecursion(input []string, findMostCommon bool, filter int64) int {
 
 	fmt.Println("Matches", bitMatches, "Misses", bitMisses)
 
-	if filter > 1 && ((len(bitMatches) > 1 && findMostCommon) || (len(bitMisses) > 1 && !findMostCommon)) {
+	var mostCommon, leastCommon []string
+	if len(bitMatches) >= len(bitMisses) {
+		mostCommon = bitMatches
+		leastCommon = bitMisses
+	} else {
+		mostCommon = bitMisses
+		leastCommon = bitMatches
+	}
+
+	if filter > 1 && ((len(mostCommon) > 1 && findMostCommon) || (len(leastCommon) > 1 && !findMostCommon)) {
 		newFilter := filter / 2
 
 		if findMostCommon {
-			if len(bitMatches) == len(bitMisses) {
-				return OxygenRecursion(bitMatches, findMostCommon, newFilter)
+			if len(mostCommon) == len(leastCommon) {
+				return OxygenRecursion(mostCommon, findMostCommon, newFilter)
 			}
 
-			if len(bitMatches) > len(bitMisses) {
-				return OxygenRecursion(bitMatches, findMostCommon, newFilter)
+			if len(mostCommon) > len(leastCommon) {
+				return OxygenRecursion(mostCommon, findMostCommon, newFilter)
 			}
 
-			return OxygenRecursion(bitMisses, findMostCommon, newFilter)
+			return OxygenRecursion(leastCommon, findMostCommon, newFilter)
 		}
 
-		if len(bitMatches) >= len(bitMisses) {
-			return OxygenRecursion(bitMisses, findMostCommon, newFilter)
+		if len(mostCommon) >= len(leastCommon) {
+			return OxygenRecursion(leastCommon, findMostCommon, newFilter)
 		}
 
-		return OxygenRecursion(bitMatches, findMostCommon, newFilter)
+		return OxygenRecursion(mostCommon, findMostCommon, newFilter)
 	}
 
 	if findMostCommon {
-		result, err := strconv.Atoi(bitMatches[0])
+		result, err := strconv.Atoi(mostCommon[0])
 		check(err)
 
 		return result
 	}
 
-	result, err := strconv.Atoi(bitMisses[0])
+	result, err := strconv.Atoi(leastCommon[0])
 	check(err)
 
 	return result
