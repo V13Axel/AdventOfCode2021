@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"strconv"
 	"strings"
@@ -18,13 +17,11 @@ func OxygenGeneratorRating(input []string) int {
 
 	CO2ScrubberRating, err := strconv.ParseInt(strconv.Itoa(OxygenRecursion(input, false, filter)), 2, 16)
 	check(err)
-	fmt.Println("Oxygen rating:", oxygenRating, "CO2 Scrubber:", CO2ScrubberRating)
 
 	return int(oxygenRating) * int(CO2ScrubberRating)
 }
 
 func OxygenRecursion(input []string, findMostCommon bool, filter int64) int {
-	fmt.Println(strconv.FormatInt(filter, 2))
 
 	var bitMatches, bitMisses []string
 	for _, row := range input {
@@ -38,8 +35,6 @@ func OxygenRecursion(input []string, findMostCommon bool, filter int64) int {
 
 		bitMisses = append(bitMisses, row)
 	}
-
-	fmt.Println("Matches", bitMatches, "Misses", bitMisses)
 
 	var mostCommon, leastCommon []string
 	if len(bitMatches) >= len(bitMisses) {
@@ -95,7 +90,6 @@ func PowerConsumption(input []string) int {
 			rotatedInput[j] = append(rotatedInput[j], intval)
 			check(err)
 		}
-		// fmt.Println(rotatedInput)
 	}
 
 	var gammaBits, epsilonBits []int
