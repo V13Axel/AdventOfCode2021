@@ -16,7 +16,7 @@ var StubStorage = map[string]interface{}{
 	"Day4": Day4,
 	"Day5": Day5,
 	"Day6": Day6,
-	// "Day7": Day7,
+	"Day7": Day7,
 	// "Day8": Day8,
 	// "Day9": Day9,
 	// "Day10": Day10,
@@ -155,6 +155,14 @@ func LCM(a, b int, integers ...int) int {
 	}
 
 	return result
+}
+
+func triangularNumber(number int) (result int) {
+	if number >= 0 {
+		result = number + triangularNumber(number-1)
+		return
+	}
+	return 0
 }
 
 func dd(anything ...interface{}) {
