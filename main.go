@@ -14,7 +14,7 @@ var StubStorage = map[string]interface{}{
 	"Day2": Day2,
 	"Day3": Day3,
 	"Day4": Day4,
-	// "Day5": Day5,
+	"Day5": Day5,
 	// "Day6": Day6,
 	// "Day7": Day7,
 	// "Day8": Day8,
@@ -134,4 +134,34 @@ func BtoI(target bool) (result int) {
 	}
 
 	return
+}
+
+// greatest common divisor (GCD) via Euclidean algorithm
+func GCD(a, b int) int {
+	for b != 0 {
+		t := b
+		b = a % b
+		a = t
+	}
+	return a
+}
+
+// find Least Common Multiple (LCM) via GCD
+func LCM(a, b int, integers ...int) int {
+	result := a * b / GCD(a, b)
+
+	for i := 0; i < len(integers); i++ {
+		result = LCM(result, integers[i])
+	}
+
+	return result
+}
+
+func dd(anything ...interface{}) {
+	fmt.Println(anything...)
+	os.Exit(1)
+}
+
+func dump(anything ...interface{}) {
+	fmt.Println(anything...)
 }
