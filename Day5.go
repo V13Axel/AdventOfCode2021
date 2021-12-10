@@ -137,7 +137,7 @@ func (v *VentGraph) drawNext(ignoreDiagonals bool) {
 		y := vent.y1
 		ytarget := vent.y2
 
-		dump(x, xtarget, y, ytarget)
+		// dump(x, xtarget, y, ytarget)
 
 		targetHit := false
 

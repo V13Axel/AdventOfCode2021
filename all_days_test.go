@@ -23,3 +23,7 @@ func TestDayFour(t *testing.T) {
 func TestDayFive(t *testing.T) {
 	testDay("5", 5, 12, t)
 }
+
+func TestDaySix(t *testing.T) {
+	testDay("6", 5934, 26984457539, t)
+}
