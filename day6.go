@@ -29,8 +29,6 @@ func (s *School) tick(tick int) {
 
 	s.fish[6] += zero
 	s.fish[8] = zero
-
-	dump("After ", tick, "days: ", s.fish)
 }
 
 func Day6(input []string) (int, int) {
