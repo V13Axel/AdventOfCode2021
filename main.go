@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"sort"
 	"strings"
 	"testing"
 )
@@ -172,4 +173,29 @@ func dd(anything ...interface{}) {
 
 func dump(anything ...interface{}) {
 	fmt.Println(anything...)
+}
+
+func sortChars(w string) string {
+	s := strings.Split(w, "")
+	sort.Strings(s)
+	return strings.Join(s, "")
+}
+
+func matchingChars(needle string, haystack string) (found int) {
+	for _, search := range needle {
+		if strings.Contains(haystack, string(search)) {
+			found++
+		}
+	}
+	return
+}
+
+func getKey(m map[string]int, value int) (key string) {
+	for k, v := range m {
+		if v == value {
+			key = k
+			return
+		}
+	}
+	return
 }
