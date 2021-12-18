@@ -19,7 +19,7 @@ var StubStorage = map[string]interface{}{
 	"Day6": Day6,
 	"Day7": Day7,
 	"Day8": Day8,
-	// "Day9": Day9,
+	"Day9": Day9,
 	// "Day10": Day10,
 	// "Day11": Day11,
 	// "Day13": Day13,
